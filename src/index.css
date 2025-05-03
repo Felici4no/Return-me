@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#F2F2F2] font-facebook text-facebook-text;
+  }
+}
+
+@layer components {
+  .fb-input {
+    @apply border border-facebook-border bg-white px-3 py-2 rounded-sm w-full text-sm focus:outline-none focus:border-facebook-blue;
+  }
+  
+  .fb-button {
+    @apply bg-gradient-to-b from-facebook-button to-facebook-buttonHover text-white font-bold py-2 px-4 rounded-sm border border-[#29447E] shadow-sm hover:from-facebook-buttonHover hover:to-facebook-button transition-colors duration-200;
+  }
+  
+  .fb-button-secondary {
+    @apply bg-gradient-to-b from-gray-100 to-gray-200 text-facebook-text font-bold py-2 px-4 rounded-sm border border-gray-300 shadow-sm hover:from-gray-200 hover:to-gray-100 transition-colors duration-200;
+  }
+  
+  .fb-link {
+    @apply text-facebook-link hover:underline cursor-pointer;
+  }
+  
+  .fb-card {
+    @apply bg-white border border-facebook-border rounded-sm shadow-facebook p-4;
+  }
+  
+  .fb-header {
+    @apply bg-gradient-to-b from-facebook-blue to-facebook-lightblue text-white p-2;
+  }
+  
+  .fb-tab {
+    @apply px-4 py-1 text-white font-bold hover:bg-opacity-20 hover:bg-white cursor-pointer;
+  }
+  
+  .fb-tab-active {
+    @apply px-4 py-1 text-white font-bold bg-white bg-opacity-10 cursor-pointer;
+  }
+}
