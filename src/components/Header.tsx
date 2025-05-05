@@ -8,9 +8,8 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex items-center justify-between px-4">
         <div className="flex items-center">
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold mr-2">Return(me)</span>
+            <span className="text-xl font-bold mr-2">FeliQuiz</span>
           </Link>
-          
         </div>
       </div>
     </header>

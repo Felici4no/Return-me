@@ -20,7 +20,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/quizzes');
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/quizzes`);
         setQuizzes(response.data);
         setLoading(false);
       } catch (error) {
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
         <div className="fb-card mb-6">
           <h1 className="text-xl font-bold text-facebook-blue mb-4">Descubra Seu Personagem</h1>
           <p className="mb-4">Faça nossos quizzes divertidos para descobrir quais personagens combinam com sua personalidade!</p>
-          
+
           <div className="flex gap-2 mt-4">
             <button
               className={`px-4 py-2 rounded-sm text-sm font-bold ${
@@ -79,14 +79,13 @@ const Home: React.FC = () => {
 
         <div className="fb-card">
           <h2 className="text-lg font-bold text-facebook-blue mb-4">
-            {selectedType === 'todos' 
+            {selectedType === 'todos'
               ? 'Quizzes Disponíveis'
               : selectedType === 'filme'
                 ? 'Quizzes de Filmes'
-                : 'Quizzes de Séries'
-            }
+                : 'Quizzes de Séries'}
           </h2>
-          
+
           {loading ? (
             <p>Carregando quizzes...</p>
           ) : filteredQuizzes.length === 0 ? (
@@ -98,9 +97,9 @@ const Home: React.FC = () => {
               {filteredQuizzes.map((quiz) => (
                 <div key={quiz.id} className="border-b border-facebook-border pb-4 last:border-b-0 last:pb-0">
                   <div className="flex flex-col md:flex-row gap-4">
-                    <img 
-                      src={quiz.image} 
-                      alt={quiz.title} 
+                    <img
+                      src={quiz.image}
+                      alt={quiz.title}
                       className="w-full md:w-32 h-32 object-cover rounded-sm"
                     />
                     <div>

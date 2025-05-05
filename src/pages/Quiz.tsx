@@ -30,10 +30,12 @@ const Quiz: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const apiUrl = `${import.meta.env.VITE_API_URL}/api/quizzes/${quizId}`;
+
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/quizzes/${quizId}`);
+        const response = await axios.get(apiUrl);
         setQuiz(response.data);
         setLoading(false);
       } catch (error) {
@@ -68,7 +70,7 @@ const Quiz: React.FC = () => {
 
   const submitAnswers = async () => {
     try {
-      await axios.post(`http://localhost:3001/api/quizzes/${quizId}/results`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/quizzes/${quizId}/results`, {
         answers: selectedAnswers
       });
       navigate(`/results/${quizId}`, { state: { answers: selectedAnswers } });
@@ -107,21 +109,21 @@ const Quiz: React.FC = () => {
         <div className="fb-card mb-4">
           <h1 className="text-xl font-bold text-facebook-blue mb-2">{quiz.title}</h1>
           <p className="text-sm mb-4">{quiz.description}</p>
-          
+
           <div className="w-full bg-gray-200 h-2 rounded-sm mb-6">
             <div 
               className="bg-facebook-blue h-2 rounded-sm" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-          
+
           <div className="text-sm text-gray-500 mb-4">
             Pergunta {currentQuestion + 1} de {quiz.questions.length}
           </div>
-          
+
           <div className="mb-6">
             <h2 className="text-lg font-bold mb-4">{question.text}</h2>
-            
+
             <div className="space-y-3">
               {question.options.map((option) => (
                 <div 
@@ -138,7 +140,7 @@ const Quiz: React.FC = () => {
               ))}
             </div>
           </div>
-          
+
           <div className="flex justify-between">
             <button 
               className="fb-button-secondary text-sm"
@@ -147,7 +149,7 @@ const Quiz: React.FC = () => {
             >
               Anterior
             </button>
-            
+
             <button 
               className="fb-button text-sm"
               onClick={handleNext}

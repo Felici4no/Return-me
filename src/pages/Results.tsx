@@ -32,7 +32,7 @@ const Results: React.FC = () => {
       }
 
       try {
-        const response = await axios.post(`http://localhost:3001/api/quizzes/${quizId}/results`, {
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/quizzes/${quizId}/results`, {
           answers: state.answers
         });
         

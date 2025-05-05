@@ -8,9 +8,9 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <Link to="/" className="text-facebook-blue font-bold">
-              Return(me)
+              FeliQuiz
             </Link>
-            <span className="text-gray-400 text-sm ml-2">© 2025 Por Lucas Feliciano</span>
+            <span className="text-gray-400 text-sm ml-2">© 2025 Por <a href="https://www.linkedin.com/in/lucas-feliciano-software/">Lucas Feliciano</a></span>
           </div>
         </div>
       </div>
