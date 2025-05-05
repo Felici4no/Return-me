@@ -89,13 +89,17 @@ const Home: React.FC = () => {
         </div>
 
         <div className="fb-card">
-          <h2 className="text-lg font-bold text-facebook-blue mb-4">
-            {selectedType === 'todos'
-              ? 'Quizzes Disponíveis'
-              : selectedType === 'filme'
-                ? 'Quizzes de Filmes'
-                : 'Quizzes de Séries'}
-          </h2>
+        <h2 className="text-lg font-bold text-facebook-blue mb-4">
+          {selectedType === 'todos'
+            ? 'Quizzes Disponíveis'
+            : selectedType === 'filme'
+              ? 'Quizzes de Filmes'
+              : selectedType === 'série'  // ← Corrigido para 'série'
+                ? 'Quizzes de Séries'
+                : selectedType === 'política'
+                  ? 'Quizzes de Política'
+                  : 'Tipo de quiz desconhecido'}
+        </h2>
 
           {loading ? (
             <p>Carregando quizzes...</p>
@@ -111,7 +115,7 @@ const Home: React.FC = () => {
                     <img
                       src={quiz.image}
                       alt={quiz.title}
-                      className="w-full md:w-32 h-32 object-cover rounded-sm"
+                      className="w-full md:w-32 h-32 object-cover object-top rounded-sm border border-facebook-border mb-4 md:mb-0"
                     />
                     <div>
                       <div className="flex items-center gap-2 mb-1">
