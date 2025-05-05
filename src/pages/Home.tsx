@@ -74,6 +74,17 @@ const Home: React.FC = () => {
             >
               Séries
             </button>
+
+            <button
+              className={`px-4 py-2 rounded-sm text-sm font-bold ${
+                selectedType === 'política'
+                  ? 'bg-facebook-blue text-white'
+                  : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
+              }`}
+              onClick={() => setSelectedType('política')}
+            >
+              Política
+            </button>
           </div>
         </div>
 
