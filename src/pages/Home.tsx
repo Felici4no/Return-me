@@ -43,49 +43,28 @@ const Home: React.FC = () => {
           <h1 className="text-xl font-bold text-facebook-blue mb-4">Descubra Seu Personagem</h1>
           <p className="mb-4">Faça nossos quizzes divertidos para descobrir quais personagens combinam com sua personalidade!</p>
 
-          <div className="flex gap-2 mt-4">
-            <button
-              className={`px-4 py-2 rounded-sm text-sm font-bold ${
-                selectedType === 'todos'
-                  ? 'bg-facebook-blue text-white'
-                  : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
-              }`}
-              onClick={() => setSelectedType('todos')}
-            >
-              Todos
-            </button>
-            <button
-              className={`px-4 py-2 rounded-sm text-sm font-bold ${
-                selectedType === 'filme'
-                  ? 'bg-facebook-blue text-white'
-                  : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
-              }`}
-              onClick={() => setSelectedType('filme')}
-            >
-              Filmes
-            </button>
-            <button
-              className={`px-4 py-2 rounded-sm text-sm font-bold ${
-                selectedType === 'série'
-                  ? 'bg-facebook-blue text-white'
-                  : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
-              }`}
-              onClick={() => setSelectedType('série')}
-            >
-              Séries
-            </button>
+          <div className="flex flex-wrap gap-2 mt-4 justify-center sm:justify-start">
+  {[
+    { label: 'Todos', value: 'todos' },
+    { label: 'Filmes', value: 'filme' },
+    { label: 'Séries', value: 'série' },
+    { label: 'Política', value: 'política' },
+    { label: 'História', value: 'história' },
+  ].map(({ label, value }) => (
+    <button
+      key={value}
+      className={`px-4 py-2 rounded-sm text-sm font-bold transition ${
+        selectedType === value
+          ? 'bg-facebook-blue text-white'
+          : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
+      }`}
+      onClick={() => setSelectedType(value)}
+    >
+      {label}
+    </button>
+  ))}
+</div>
 
-            <button
-              className={`px-4 py-2 rounded-sm text-sm font-bold ${
-                selectedType === 'política'
-                  ? 'bg-facebook-blue text-white'
-                  : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
-              }`}
-              onClick={() => setSelectedType('política')}
-            >
-              Política
-            </button>
-          </div>
         </div>
 
         <div className="fb-card">
@@ -94,11 +73,13 @@ const Home: React.FC = () => {
             ? 'Quizzes Disponíveis'
             : selectedType === 'filme'
               ? 'Quizzes de Filmes'
-              : selectedType === 'série'  // ← Corrigido para 'série'
+              : selectedType === 'série'
                 ? 'Quizzes de Séries'
                 : selectedType === 'política'
                   ? 'Quizzes de Política'
-                  : 'Tipo de quiz desconhecido'}
+                  : selectedType === 'história'  // ← Nova condição adicionada
+                    ? 'Quizzes de História'
+                    : 'Tipo de quiz desconhecido'}
         </h2>
 
           {loading ? (
