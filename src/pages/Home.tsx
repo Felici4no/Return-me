@@ -50,6 +50,7 @@ const Home: React.FC = () => {
     { label: 'Séries', value: 'série' },
     { label: 'Política', value: 'política' },
     { label: 'História', value: 'história' },
+    { label: 'Culinária', value: 'culinária' },
   ].map(({ label, value }) => (
     <button
       key={value}
@@ -79,7 +80,9 @@ const Home: React.FC = () => {
                   ? 'Quizzes de Política'
                   : selectedType === 'história'  // ← Nova condição adicionada
                     ? 'Quizzes de História'
-                    : 'Tipo de quiz desconhecido'}
+                    : selectedType === 'culinária'  // ← Nova condição adicionada
+                      ? 'Quizzes de Culinária'
+                      : 'Tipo de quiz desconhecido'}
         </h2>
 
           {loading ? (
