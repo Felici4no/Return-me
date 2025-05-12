@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     // Simulação de login com nome de usuário
     if (username === 'felipe' && password === '123456') {
       localStorage.setItem('token', 'simulado-token-usuario');
-      navigate('/');
+      navigate('/perfil'); // Redireciona para a página de perfil após o login
     } else {
       setError('Nome de usuário ou senha inválidos.');
     }
@@ -22,7 +22,7 @@ const Login: React.FC = () => {
   const handleGoogleLogin = () => {
     // Simulação de login Google
     localStorage.setItem('token', 'simulado-token-google');
-    navigate('/');
+    navigate('/perfil'); // Redireciona para a página de perfil após o login
   };
 
   return (
@@ -34,8 +34,8 @@ const Login: React.FC = () => {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
+            <label className="block text-sm font-medium text-gray-700">Nome de Usuário</label>
             <input
-            placeholder='username'
               type="text"
               className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
               value={username}
@@ -45,8 +45,8 @@ const Login: React.FC = () => {
           </div>
 
           <div>
+            <label className="block text-sm font-medium text-gray-700">Senha</label>
             <input
-            placeholder='password'
               type="password"
               className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
               value={password}

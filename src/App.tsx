@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Results from './pages/Results';
 import Login from './pages/Login';
+import Perfil from './pages/Perfil';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/quiz/:quizId" element={<Quiz />} />
             <Route path="/results/:quizId" element={<Results />} />
             <Route path="/login" element={<Login />} /> {/* ← Adicione esta linha */}
+            <Route path="/perfil" element={<Perfil />} />
           </Routes>
         </main>
         <Footer />
