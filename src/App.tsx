@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Quiz from './pages/Quiz';
 import Results from './pages/Results';
+import Login from './pages/Login';
+
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/quiz/:quizId" element={<Quiz />} />
             <Route path="/results/:quizId" element={<Results />} />
+            <Route path="/login" element={<Login />} /> {/* ← Adicione esta linha */}
           </Routes>
         </main>
         <Footer />
