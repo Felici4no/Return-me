@@ -1,8 +1,10 @@
-# Return(me) 🎭
+# FeliQuiz 🎭
+![image](https://github.com/user-attachments/assets/0c0aec04-a26b-4d3c-86c9-24027036a2e3)
+![image](https://github.com/user-attachments/assets/52672ee7-11fa-4250-be0d-50570d09162e)
 
-**Return(me)** é um projeto **Fullstack** interativo que oferece quizzes temáticos baseados em filmes e séries populares. Após responder às perguntas, o site revela qual personagem mais combina com você, com base em características de personalidade.
+**FeliQuiz** é um projeto **Fullstack** interativo que oferece quizzes temáticos baseados em filmes e séries populares. Após responder às perguntas, o site revela qual personagem mais combina com você, com base em características de personalidade.
 
-🔗 [Acesse o site](https://return-me.vercel.app)
+🔗 [Acesse o site](https://feliquizz.vercel.app/)
 
 ---
 
