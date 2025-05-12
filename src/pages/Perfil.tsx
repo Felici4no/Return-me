@@ -1,4 +1,5 @@
 import React from 'react';
+import Emblema from "../components/Emblema"; // Ajuste o caminho conforme necessário
 
 const Perfil: React.FC = () => {
   // Dados simulados
@@ -12,6 +13,11 @@ const Perfil: React.FC = () => {
     resultados: [
       { titulo: 'Qual personagem de série é você?', resultado: 'Walter White', data: '10/05/2025' },
       { titulo: 'Que tipo de político você seria?', resultado: 'Diplomata', data: '09/05/2025' },
+      { titulo: 'Qual personagem de Harry Potter você seria?', resultado: 'Harry Potter', data: '08/05/2025' },
+      { titulo: 'Qual personagem de How I Met Your Mother é você?', resultado: 'How I Met Your Mother', data: '07/05/2025' },
+      { titulo: 'Qual candidato à presidência 2022 você seria?', resultado: 'Candidato 2022', data: '06/05/2025' },
+      { titulo: 'Qual imperador romano você seria?', resultado: 'Imperador Romano', data: '05/05/2025' },
+      { titulo: 'Qual xícara de café você seria?', resultado: 'Xícara de Café', data: '04/05/2025' }
     ]
   };
 
@@ -25,7 +31,7 @@ const Perfil: React.FC = () => {
             alt={usuario.nome}
             className="w-20 h-20 rounded-full border-4 border-facebook-border shadow-md"
           />
-          <div>
+          <div className="mt-2 md:mt-0">
             <h2 className="text-2xl md:text-3xl font-extrabold text-facebook-dark-blue">
               {usuario.nome}
             </h2>
@@ -59,17 +65,26 @@ const Perfil: React.FC = () => {
             {usuario.resultados.map((quiz, index) => (
               <div 
                 key={index}
-                className="border-l-4 border-facebook-blue p-4 rounded-lg bg-gray-50 hover:bg-blue-50 transition-all shadow-sm hover:shadow-md"
+                className="group p-4 rounded-lg bg-white hover:bg-gray-50 transition-all 
+                  shadow-sm hover:shadow-md border border-gray-200"
               >
-                <p className="text-sm font-semibold text-gray-800">
-                  {quiz.titulo}
-                </p>
-                <p className="text-xs text-gray-600 mt-2">
-                  Resultado: <span className="font-medium">{quiz.resultado}</span>
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  <time dateTime="2025-05-10">{quiz.data}</time>
-                </p>
+                <div className="flex items-start gap-4">
+                  <Emblema resultado={quiz.resultado} className="flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-gray-800 mb-2">
+                      {quiz.titulo}
+                    </p>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-xs text-gray-600">Resultado:</span>
+                      <span className="text-xs font-medium text-gray-800">
+                        {quiz.resultado}
+                      </span>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-2">
+                      <time dateTime={quiz.data}>{quiz.data}</time>
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -77,7 +92,7 @@ const Perfil: React.FC = () => {
       </div>
     </div>
   );
-
+  
 };
 
 export default Perfil;
