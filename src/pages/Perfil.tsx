@@ -4,7 +4,7 @@ import Emblema from "../components/Emblema"; // Ajuste o caminho conforme necess
 const Perfil: React.FC = () => {
   // Dados simulados
   const usuario = {
-    nome: 'felipe',
+    nome: 'Lucas Feliciano',
     avatar: 'https://ui-avatars.com/api/?name=Felipe&background=3b5998&color=fff',
     atividades: [
       'Iniciou o quiz "Personagem de Filmes"',

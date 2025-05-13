@@ -10,12 +10,25 @@ interface Quiz {
   questions: number;
   slug: string;
   type: string;
+  subtype?: string;
 }
+
+const subfilters: Record<string, string[]> = {
+  filme: ['Ação', 'Comédia', 'Terror'],
+  série: ['Drama', 'Sitcom', 'Documentário'],
+  política: ['Brasil', 'Mundo'],
+  história: ['Antiga', 'Moderna'],
+  culinária: ['Doce', 'Salgado'],
+  programação: ['Frontend', 'Backend', 'Fullstack'],
+  artes: ['Pintura', 'Escultura', 'Música'],
+};
 
 const Home: React.FC = () => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedType, setSelectedType] = useState<string>('todos');
+  const [selectedSubfilter, setSelectedSubfilter] = useState<string>('todos');
+  const [showSubfilters, setShowSubfilters] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -32,9 +45,16 @@ const Home: React.FC = () => {
     fetchQuizzes();
   }, []);
 
-  const filteredQuizzes = selectedType === 'todos'
-    ? quizzes
-    : quizzes.filter(quiz => quiz.type === selectedType);
+  useEffect(() => {
+    setShowSubfilters(selectedType !== 'todos' && subfilters[selectedType] !== undefined);
+    setSelectedSubfilter('todos');
+  }, [selectedType]);
+
+  const filteredQuizzes = quizzes.filter(
+    quiz =>
+      (selectedType === 'todos' || quiz.type === selectedType) &&
+      (selectedSubfilter === 'todos' || quiz.subtype?.toLowerCase() === selectedSubfilter.toLowerCase())
+  );
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -43,50 +63,71 @@ const Home: React.FC = () => {
           <h1 className="text-xl font-bold text-facebook-blue mb-4">Descubra Seu Personagem</h1>
           <p className="mb-4">Faça nossos quizzes divertidos para descobrir quais personagens combinam com sua personalidade!</p>
 
+          {/* Filtros principais */}
           <div className="flex flex-wrap gap-2 mt-4 justify-center sm:justify-start">
-  {[
-    { label: 'Todos', value: 'todos' },
-    { label: 'Filmes', value: 'filme' },
-    { label: 'Séries', value: 'série' },
-    { label: 'Política', value: 'política' },
-    { label: 'História', value: 'história' },
-    { label: 'Culinária', value: 'culinária' },
-    { label: 'Programação', value: 'programação' },
-  ].map(({ label, value }) => (
-    <button
-      key={value}
-      className={`px-4 py-2 rounded-sm text-sm font-bold transition ${
-        selectedType === value
-          ? 'bg-facebook-blue text-white'
-          : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
-      }`}
-      onClick={() => setSelectedType(value)}
-    >
-      {label}
-    </button>
-  ))}
-</div>
+            {[
+              { label: 'Todos', value: 'todos' },
+              { label: 'Filmes', value: 'filme' },
+              { label: 'Séries', value: 'série' },
+              { label: 'Política', value: 'política' },
+              { label: 'História', value: 'história' },
+              { label: 'Culinária', value: 'culinária' },
+              { label: 'Programação', value: 'programação' },
+              { label: 'Artes', value: 'artes' },
+            ].map(({ label, value }) => (
+              <button
+                key={value}
+                className={`px-4 py-2 rounded-sm text-sm font-bold transition ${
+                  selectedType === value
+                    ? 'bg-facebook-blue text-white'
+                    : 'bg-gray-100 text-facebook-blue hover:bg-gray-200'
+                }`}
+                onClick={() => setSelectedType(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
 
+          {/* Subfiltros com animação */}
+          <div
+            className={`transition-all duration-300 overflow-hidden ${
+              showSubfilters ? 'max-h-40 mt-4 opacity-100' : 'max-h-0 opacity-0'
+            }`}
+          >
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+              <button
+                className={`px-3 py-1 rounded text-sm font-medium ${
+                  selectedSubfilter === 'todos' ? 'bg-facebook-blue text-white' : 'bg-gray-200'
+                }`}
+                onClick={() => setSelectedSubfilter('todos')}
+              >
+                Todos
+              </button>
+              {selectedType !== 'todos' &&
+                subfilters[selectedType]?.map((sub) => (
+                  <button
+                    key={sub}
+                    className={`px-3 py-1 rounded text-sm font-medium transition ${
+                      selectedSubfilter === sub
+                        ? 'bg-facebook-blue text-white'
+                        : 'bg-gray-200 hover:bg-gray-300'
+                    }`}
+                    onClick={() => setSelectedSubfilter(sub)}
+                  >
+                    {sub}
+                  </button>
+                ))}
+            </div>
+          </div>
         </div>
 
         <div className="fb-card">
-        <h2 className="text-lg font-bold text-facebook-blue mb-4">
-          {selectedType === 'todos'
-            ? 'Quizzes Disponíveis'
-            : selectedType === 'filme'
-              ? 'Quizzes de Filmes'
-              : selectedType === 'série'
-                ? 'Quizzes de Séries'
-                : selectedType === 'política'
-                  ? 'Quizzes de Política'
-                  : selectedType === 'história'  // ← Nova condição adicionada
-                    ? 'Quizzes de História'
-                    : selectedType === 'culinária'  // ← Nova condição adicionada
-                      ? 'Quizzes de Culinária'
-                      : selectedType === 'programação'  // ← Nova condição adicionada
-                      ? 'Quizzes de programação'
-                        : 'Tipo de quiz desconhecido'}
-        </h2>
+          <h2 className="text-lg font-bold text-facebook-blue mb-4">
+            {selectedType === 'todos'
+              ? 'Quizzes Disponíveis'
+              : `Quizzes de ${selectedType.charAt(0).toUpperCase() + selectedType.slice(1)}`}
+          </h2>
 
           {loading ? (
             <p>Carregando quizzes...</p>

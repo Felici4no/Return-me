@@ -112,10 +112,11 @@ const Quiz: React.FC = () => {
 
           <div className="w-full bg-gray-200 h-2 rounded-sm mb-6">
             <div 
-              className="bg-facebook-blue h-2 rounded-sm" 
+              className="bg-facebook-blue h-2 rounded-sm transition-all duration-500" 
               style={{ width: `${progress}%` }}
             ></div>
           </div>
+
 
           <div className="text-sm text-gray-500 mb-4">
             Pergunta {currentQuestion + 1} de {quiz.questions.length}
