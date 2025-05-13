@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 interface Quiz {
@@ -29,6 +29,15 @@ const Home: React.FC = () => {
   const [selectedType, setSelectedType] = useState<string>('todos');
   const [selectedSubfilter, setSelectedSubfilter] = useState<string>('todos');
   const [showSubfilters, setShowSubfilters] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+
+  const handleSurpriseMe = () => {
+    if (quizzes.length > 0) {
+      const randomQuiz = quizzes[Math.floor(Math.random() * quizzes.length)];
+      navigate(`/quiz/${randomQuiz.slug}`);
+    }
+  };
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -61,8 +70,9 @@ const Home: React.FC = () => {
       <div className="max-w-2xl mx-auto">
         <div className="fb-card mb-6">
           <h1 className="text-xl font-bold text-facebook-blue mb-4">Descubra Seu Personagem</h1>
+          
           <p className="mb-4">Faça nossos quizzes divertidos para descobrir quais personagens combinam com sua personalidade!</p>
-
+          
           {/* Filtros principais */}
           <div className="flex flex-wrap gap-2 mt-4 justify-center sm:justify-start">
             {[
@@ -86,7 +96,7 @@ const Home: React.FC = () => {
               >
                 {label}
               </button>
-            ))}
+            ))}          
           </div>
 
           {/* Subfiltros com animação */}
@@ -161,6 +171,14 @@ const Home: React.FC = () => {
                   </div>
                 </div>
               ))}
+              <div className="mb-4 text-center">
+            <button
+              onClick={handleSurpriseMe}
+              className="px-4 py-2 bg-facebook-blue text-white rounded-md hover:bg-facebook-blue-dark transition"
+            >
+              Me Surpreenda
+            </button>
+          </div>
             </div>
           )}
         </div>
