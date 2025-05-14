@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import Sobre from './pages/Sobre';
 import Termos from './pages/Termos';
 import NotFound from './pages/NotFound';
+import AdminDashboard from './pages/AdminDashboard'; // ← Importa o componente AdminDashboard
 
 
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/register" element={<Register />} /> {/* ← Adicione esta linha */}
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/termos" element={<Termos />} />
+            <Route path="/admin" element={<AdminDashboard />} /> {/* ← Adicione esta linha */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

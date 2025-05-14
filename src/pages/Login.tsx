@@ -13,7 +13,7 @@ const Login: React.FC = () => {
     // Simulação de login com nome de usuário
     if (username === 'felipe' && password === '123456') {
       localStorage.setItem('token', 'simulado-token-usuario');
-      navigate('/perfil'); // Redireciona para a página de perfil após o login
+      navigate('/admin'); // Redireciona para a página de perfil após o login
     } else {
       setError('Nome de usuário ou senha inválidos.');
     }
