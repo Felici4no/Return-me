@@ -23,6 +23,16 @@ interface Question {
   options: Option[];
 }
 
+const quizTypes = [
+  'filme',
+  'série',
+  'política',
+  'história',
+  'culinária',
+  'programação',
+  'artes'
+];
+
 const CreateQuiz: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -30,6 +40,9 @@ const CreateQuiz: React.FC = () => {
     id: '',
     title: '',
     description: '',
+    image: '',
+    type: '',
+    slug: '',
     characters: [] as Character[],
     questions: [] as Question[]
   });
@@ -108,8 +121,14 @@ const CreateQuiz: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
+    const finalQuiz = {
+      ...quiz,
+      questions: quiz.questions.length,
+      slug: quiz.id
+    };
+
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/quizzes`, quiz);
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/quizzes`, finalQuiz);
       navigate('/admin');
     } catch (error) {
       console.error('Erro ao criar quiz:', error);
@@ -161,6 +180,35 @@ const CreateQuiz: React.FC = () => {
                   rows={3}
                   required
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Imagem do Quiz</label>
+                <input
+                  type="url"
+                  value={quiz.image}
+                  onChange={(e) => setQuiz({ ...quiz, image: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  placeholder="URL da imagem de capa"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+                <select
+                  value={quiz.type}
+                  onChange={(e) => setQuiz({ ...quiz, type: e.target.value })}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2"
+                  required
+                >
+                  <option value="">Selecione um tipo</option>
+                  {quizTypes.map(type => (
+                    <option key={type} value={type}>
+                      {type.charAt(0).toUpperCase() + type.slice(1)}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
 
