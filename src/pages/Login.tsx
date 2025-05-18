@@ -62,19 +62,7 @@ const Login: React.FC = () => {
             Entrar
           </button>
         </form>
-
-        <div className="my-4 text-center text-gray-500">ou</div>
-
-        <button
-          onClick={handleGoogleLogin}
-          className="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 transition"
-        >
-          Entrar com Google
-        </button>
-
-        <p className="mt-4 text-sm text-center">
-          Não tem uma conta? <a href="/register" className="text-facebook-blue hover:underline">Cadastre-se</a>
-        </p>
+  
       </div>
     </div>
   );
