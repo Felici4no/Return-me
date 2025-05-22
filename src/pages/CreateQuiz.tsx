@@ -267,15 +267,47 @@ const CreateQuiz: React.FC = () => {
                         placeholder="URL da imagem"
                         required
                       />
-
-                      <input
-                        type="text"
-                        value={character.traits.join(', ')}
-                        onChange={(e) => handleCharacterTraits(index, e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-3 py-2"
-                        placeholder="Características (separadas por vírgula)"
-                        required
-                      />
+                      <div className="my-2">
+                        <label className="block font-medium mb-1">Traits</label>
+                        <div className="flex flex-wrap gap-2 border px-3 py-2 rounded">
+                          {character.traits.map((trait, tIndex) => (
+                            <span
+                              key={tIndex}
+                              className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full flex items-center space-x-1"
+                            >
+                              <span>{trait}</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const updatedCharacters = [...quiz.characters];
+                                  updatedCharacters[index].traits.splice(tIndex, 1);
+                                  setQuiz({ ...quiz, characters: updatedCharacters });
+                                }}
+                                className="ml-1 text-blue-600 hover:text-blue-800"
+                              >
+                                ×
+                              </button>
+                            </span>
+                          ))}
+                          <input
+                            type="text"
+                            placeholder="Digite e pressione Enter"
+                            onKeyDown={(e) => {
+                              if (e.key === 'Enter' || e.key === ',') {
+                                e.preventDefault();
+                                const newTrait = e.currentTarget.value.trim();
+                                if (newTrait && !character.traits.includes(newTrait)) {
+                                  const updatedCharacters = [...quiz.characters];
+                                  updatedCharacters[index].traits.push(newTrait);
+                                  setQuiz({ ...quiz, characters: updatedCharacters });
+                                }
+                                e.currentTarget.value = '';
+                              }
+                            }}
+                            className="flex-1 min-w-[120px] outline-none"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}

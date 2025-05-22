@@ -11,7 +11,9 @@ interface Quiz {
   slug: string;
   type: string;
   subtype?: string;
+  timesAnswered?: number; // <-- novo campo
 }
+
 
 const subfilters: Record<string, string[]> = {
   filme: ['Ação', 'Comédia', 'Terror'],
@@ -21,6 +23,7 @@ const subfilters: Record<string, string[]> = {
   culinária: ['Doce', 'Salgado'],
   programação: ['Frontend', 'Backend', 'Fullstack'],
   artes: ['Pintura', 'Escultura', 'Música'],
+  casal: ['Romântico', 'Amizade','Par Ideal'],
 };
 
 const Home: React.FC = () => {
@@ -38,6 +41,16 @@ const Home: React.FC = () => {
       navigate(`/quiz/${randomQuiz.slug}`);
     }
   };
+    const EM_MANUTENCAO = import.meta.env.VITE_EM_MANUTENCAO === 'true';
+
+    if (EM_MANUTENCAO) {
+      return (
+        <div className="container mx-auto px-4 py-6 text-center">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">🚧 Sistema em manutenção</h1>
+          <p className="text-gray-600">Estamos atualizando o sistema. Tente novamente mais tarde.</p>
+        </div>
+      );
+    }
 
   useEffect(() => {
     const fetchQuizzes = async () => {
@@ -84,6 +97,8 @@ const Home: React.FC = () => {
               { label: 'Culinária', value: 'culinária' },
               { label: 'Programação', value: 'programação' },
               { label: 'Artes', value: 'artes' },
+              { label: 'Casal', value: 'casal' },
+             
             ].map(({ label, value }) => (
               <button
                 key={value}
@@ -163,10 +178,17 @@ const Home: React.FC = () => {
                         </span>
                       </div>
                       <p className="text-sm mb-2">{quiz.description}</p>
+                      
+                      <p className="text-xs text-gray-500 mb-1">
+                        {quiz.timesAnswered ?? 0} resposta{(quiz.timesAnswered ?? 0) === 1 ? '' : 's'}
+                      </p>
                       <p className="text-xs text-gray-500 mb-3">{quiz.questions} perguntas</p>
+
                       <Link to={`/quiz/${quiz.slug}`} className="fb-button text-sm">
                         Fazer Quiz
                       </Link>
+
+
                     </div>
                   </div>
                 </div>
@@ -183,6 +205,7 @@ const Home: React.FC = () => {
           )}
         </div>
       </div>
+      
     </div>
   );
 };
