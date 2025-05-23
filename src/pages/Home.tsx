@@ -52,20 +52,35 @@ const Home: React.FC = () => {
       );
     }
 
-  useEffect(() => {
-    const fetchQuizzes = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/quizzes`);
-        setQuizzes(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Erro ao carregar quizzes:', error);
-        setLoading(false);
-      }
-    };
+useEffect(() => {
+  const fetchQuizzes = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/quizzes`);
+      const data = response.data as any[];
+      
+      const quizzesMapped: Quiz[] = data.map(q => ({
+        id:          q.id,
+        title:       q.title,
+        description: q.description,
+        slug:        q.slug,
+        type:        q.type,
+        image:       q.image_url,       // aqui
+        questions:   q.questions_count, // e aqui
+        subtype:       q.subtype,
+        timesAnswered: q.times_answered
+      }));
 
-    fetchQuizzes();
-  }, []);
+      setQuizzes(quizzesMapped);
+    } catch (error) {
+      console.error('Erro ao carregar quizzes:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchQuizzes();
+}, []);
+
 
   useEffect(() => {
     setShowSubfilters(selectedType !== 'todos' && subfilters[selectedType] !== undefined);
