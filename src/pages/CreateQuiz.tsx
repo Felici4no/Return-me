@@ -180,7 +180,7 @@ const CreateQuiz: React.FC = () => {
 
     // Monta payload no formato que o seu backend espera
     const payload = {
-      id: quiz.id,
+      //id: quiz.id,
       slug: quiz.id,
       title: quiz.title,
       description: quiz.description,
