@@ -203,7 +203,8 @@ const CreateQuiz: React.FC = () => {
     };
 
     try {
-      await axios.post('http://localhost:3001/api/quizzes', payload);
+      // Agora, apontando para o Render:
+      await axios.post('https://return-me-backend.onrender.com/api/quizzes', payload);
       navigate('/admin');
     } catch (err: any) {
       console.error('Erro ao criar quiz:', err);
