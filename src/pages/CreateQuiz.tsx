@@ -40,24 +40,21 @@ const CreateQuiz: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   const [quiz, setQuiz] = useState({
-    id: '',
+    slug: '',
     title: '',
     description: '',
     image: '',
     type: '',
-    slug: '',
     characters: [] as Character[],
     questions: [] as Question[]
   });
 
-  // === 1) Computar lista única de traits vindas dos personagens ===
-  //    Sempre que 'quiz.characters' mudar, re-calculamos a lista de traits.
+  // Computa lista única de traits vindas dos personagens
   const availableTraits = useMemo(() => {
     const allTraits = quiz.characters.flatMap((c) => c.traits);
     return Array.from(new Set(allTraits));
   }, [quiz.characters]);
 
-  // === 2) Adicionar um personagem vazio ===
   const handleAddCharacter = () => {
     const newCharacter: Character = {
       id: `char-${Date.now()}`,
@@ -72,7 +69,6 @@ const CreateQuiz: React.FC = () => {
     }));
   };
 
-  // === 3) Adicionar uma pergunta vazia com 4 opções vazias ===
   const handleAddQuestion = () => {
     const newQuestion: Question = {
       id: `q${quiz.questions.length + 1}`,
@@ -91,7 +87,6 @@ const CreateQuiz: React.FC = () => {
     }));
   };
 
-  // === 4) Atualizar campos do personagem (nome, descrição, imagem) ===
   const handleCharacterChange = (
     index: number,
     field: keyof Character,
@@ -104,7 +99,6 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 5) Atualizar traits do personagem (split por vírgula) ===
   const handleCharacterTraits = (index: number, traits: string) => {
     setQuiz((prev) => {
       const updated = [...prev.characters];
@@ -119,7 +113,6 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 6) Atualizar texto da pergunta ===
   const handleQuestionChange = (
     questionIndex: number,
     value: string
@@ -131,7 +124,6 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 7) Atualizar texto de uma opção ===
   const handleOptionTextChange = (
     questionIndex: number,
     optionIndex: number,
@@ -144,7 +136,6 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 8) Atualizar traits de uma opção, mas somente entre `availableTraits` ===
   const handleOptionTraitsChange = (
     questionIndex: number,
     optionIndex: number,
@@ -157,7 +148,6 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 9) Remover personagem ===
   const handleRemoveCharacter = (index: number) => {
     setQuiz((prev) => {
       const updated = prev.characters.filter((_, i) => i !== index);
@@ -165,7 +155,6 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 10) Remover pergunta ===
   const handleRemoveQuestion = (index: number) => {
     setQuiz((prev) => {
       const updated = prev.questions.filter((_, i) => i !== index);
@@ -173,15 +162,12 @@ const CreateQuiz: React.FC = () => {
     });
   };
 
-  // === 11) Enviar ao backend ===
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Monta payload no formato que o seu backend espera
     const payload = {
-      //id: quiz.id,
-      slug: quiz.id,
+      slug: quiz.slug,
       title: quiz.title,
       description: quiz.description,
       image_url: quiz.image,
@@ -203,8 +189,11 @@ const CreateQuiz: React.FC = () => {
     };
 
     try {
-      // Agora, apontando para o Render:
-      await axios.post('https://return-me-backend.onrender.com/api/quizzes', payload);
+      // **Use a URL de produção** do seu backend no Render:
+      await axios.post(
+        'https://return-me-backend.onrender.com/api/quizzes',
+        payload
+      );
       navigate('/admin');
     } catch (err: any) {
       console.error('Erro ao criar quiz:', err);
@@ -223,24 +212,23 @@ const CreateQuiz: React.FC = () => {
           </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* ===== Dados Básicos ===== */}
+            {/* Dados Básicos */}
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  ID do Quiz
+                  Slug do Quiz
                 </label>
                 <input
                   type="text"
-                  value={quiz.id}
+                  value={quiz.slug}
                   onChange={(e) =>
-                    setQuiz((prev) => ({ ...prev, id: e.target.value }))
+                    setQuiz((prev) => ({ ...prev, slug: e.target.value }))
                   }
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                   placeholder="ex: qual-dev-brasileiro-voce-seria"
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Título
@@ -256,7 +244,6 @@ const CreateQuiz: React.FC = () => {
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Descrição
@@ -264,17 +251,13 @@ const CreateQuiz: React.FC = () => {
                 <textarea
                   value={quiz.description}
                   onChange={(e) =>
-                    setQuiz((prev) => ({
-                      ...prev,
-                      description: e.target.value
-                    }))
+                    setQuiz((prev) => ({ ...prev, description: e.target.value }))
                   }
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                   rows={3}
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Imagem do Quiz
@@ -290,7 +273,6 @@ const CreateQuiz: React.FC = () => {
                   required
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Tipo
@@ -313,7 +295,7 @@ const CreateQuiz: React.FC = () => {
               </div>
             </div>
 
-            {/* ===== Personagens ===== */}
+            {/* Personagens */}
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-facebook-blue">
@@ -353,11 +335,7 @@ const CreateQuiz: React.FC = () => {
                         type="text"
                         value={character.name}
                         onChange={(e) =>
-                          handleCharacterChange(
-                            index,
-                            'name',
-                            e.target.value
-                          )
+                          handleCharacterChange(index, 'name', e.target.value)
                         }
                         className="w-full border border-gray-300 rounded-md px-3 py-2"
                         placeholder="Nome do personagem"
@@ -367,11 +345,7 @@ const CreateQuiz: React.FC = () => {
                       <textarea
                         value={character.description}
                         onChange={(e) =>
-                          handleCharacterChange(
-                            index,
-                            'description',
-                            e.target.value
-                          )
+                          handleCharacterChange(index, 'description', e.target.value)
                         }
                         className="w-full border border-gray-300 rounded-md px-3 py-2"
                         placeholder="Descrição do personagem"
@@ -383,18 +357,14 @@ const CreateQuiz: React.FC = () => {
                         type="url"
                         value={character.image}
                         onChange={(e) =>
-                          handleCharacterChange(
-                            index,
-                            'image',
-                            e.target.value
-                          )
+                          handleCharacterChange(index, 'image', e.target.value)
                         }
                         className="w-full border border-gray-300 rounded-md px-3 py-2"
                         placeholder="URL da imagem"
                         required
                       />
 
-                      {/* ===== Traits do personagem (input livre) ===== */}
+                      {/* Traits do personagem (input livre) */}
                       <div className="my-2">
                         <label className="block font-medium mb-1">Traits</label>
                         <div className="flex flex-wrap gap-2 border px-3 py-2 rounded">
@@ -449,7 +419,7 @@ const CreateQuiz: React.FC = () => {
               </div>
             </div>
 
-            {/* ===== Perguntas ===== */}
+            {/* Perguntas */}
             <div>
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-facebook-blue">
@@ -502,7 +472,6 @@ const CreateQuiz: React.FC = () => {
                             key={option.id}
                             className="grid grid-cols-2 gap-2"
                           >
-                            {/* === 7.1 Texto da opção === */}
                             <input
                               type="text"
                               value={option.text}
@@ -520,7 +489,7 @@ const CreateQuiz: React.FC = () => {
                               required
                             />
 
-                            {/* === 8.1 Traits da opção: <select multiple> com availableTraits === */}
+                            {/* Traits da opção: select múltiplo com availableTraits */}
                             <div className="flex flex-col">
                               <label className="text-sm font-medium text-gray-700 mb-1">
                                 Traits (⇧/Ctrl para múltiplos)
@@ -529,7 +498,6 @@ const CreateQuiz: React.FC = () => {
                                 multiple
                                 value={option.traits}
                                 onChange={(e) => {
-                                  // extrai valores selecionados
                                   const selected = Array.from(
                                     e.target.selectedOptions
                                   ).map((opt) => opt.value);
@@ -557,7 +525,7 @@ const CreateQuiz: React.FC = () => {
               </div>
             </div>
 
-            {/* ===== Botão Salvar ===== */}
+            {/* Botão Salvar */}
             <div className="flex justify-end pt-6">
               <button
                 type="submit"

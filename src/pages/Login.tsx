@@ -61,6 +61,9 @@ const Login: React.FC = () => {
           >
             Entrar
           </button>
+          <p className="mt-4 text-sm text-center">
+          Não tem uma conta? <a href="/register" className="text-facebook-blue hover:underline">Criar</a>
+        </p>
         </form>
   
       </div>
